@@ -5,15 +5,15 @@ class Menu extends Phaser.Scene {
     preload() {
         // load audio
         this.load.audio('sfx_select', './assets/buzz.wav');
-        this.load.audio('sfx_explosion', './assets/bugsplat-sound.wav');
-        this.load.audio('sfx_rocket', './assets/frog-ribbet1.wav');
+        this.load.audio('sfx_splat', './assets/bugsplat-sound.wav');
+        this.load.audio('sfx_frog', './assets/frog-ribbet1.wav');
         this.load.image('menu_bg', './assets/pond_bg.png'); //https://wallpapersden.com/galaxies-pixel-art-wallpaper/640x480/
     }
 
     create() {
         // menu text configuration
         let menuConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'Brush',
             fontSize: '28px',
             backgroundColor: '#0a3816',
             color: '#217ec4',

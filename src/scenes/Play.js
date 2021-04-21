@@ -93,12 +93,12 @@ class Play extends Phaser.Scene {
         //     this.timeRight.text = this.timeLeft;
         // },null, this);
 
-        this.clock = this.time.delayedCall(60000, () => {
-            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5);
-            this.timeLeft = this.timeLeft -1; 
-            this.gameOver = true;
-        }, null, this);
+        // this.clock = this.time.delayedCall(60000, () => {
+        //     this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
+        //     this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5);
+        //     this.timeLeft = this.timeLeft -1; 
+        //     this.gameOver = true;
+        // }, null, this);
 
         
       }
@@ -126,6 +126,7 @@ class Play extends Phaser.Scene {
         if(this.checkCollision(this.p1Rocket, this.ship03)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship03);   
+            this.time.pau
         }
         if (this.checkCollision(this.p1Rocket, this.ship02)) {
             this.p1Rocket.reset();
@@ -137,8 +138,7 @@ class Play extends Phaser.Scene {
         }
         
         this.updateTimer();
-        // timer++; 
-        // this.updateTimer(timer);
+        
       }
 
       checkCollision(rocket, ship) {
@@ -166,25 +166,42 @@ class Play extends Phaser.Scene {
         // score add and repaint
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score;
-        this.sound.play('sfx_explosion');       
+        this.sound.play('sfx_splat');       
+        this.timeLeft = this.timeLeft + 5;
+        this.timeRight.text = this.timeLeft;
     }
     updateTimer() {
         // Check to see if the counter has been initialized
         if ( typeof this.updateTimer.counter == 'undefined' ) {
             // It has not... perform the initialization
             this.updateTimer.counter = 0;
-            
         }
         ++this.updateTimer.counter;
-        // Do something stupid to indicate the value
+        this.div = Math.round(game.loop.actualFps);
         if(this.updateTimer.counter%60 == 0){
-            // console.log(this.countMyself.counter);
-            // console.log("1 second has passed");
+  
             if(this.timeLeft > 0){
                 this.timeLeft = this.timeLeft -1; 
                 this.timeRight.text = this.timeLeft;
+                console.log(this.div);
             }
-            
+            let scoreConfig = {
+                fontFamily: 'Courier',
+                fontSize: '28px',
+                backgroundColor: '#F3B141',
+                color: '#843605',
+                align: 'right',
+                padding: {
+                top: 5,
+                bottom: 5,
+                },
+            }
+            if(this.timeLeft == 0){
+                this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
+                this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5);
+                this.timeLeft = this.timeLeft -1; 
+                this.gameOver = true;
+            }
         }
         
     }
